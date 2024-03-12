@@ -36,6 +36,8 @@ export const TextDiv = styled.div`
   padding: 5px;
   text-align: -webkit-center;
 
+  margin-bottom: 30px;
+
   p {
     margin-top: 15px;
     &:first-child {
@@ -51,5 +53,71 @@ export const TextDiv = styled.div`
       line-height: 130%;
       color: ${(props) => props.theme.label};
     }
+  }
+`
+
+export const PriceDiv = styled.div`
+  display: flex;
+  align-items: baseline;
+
+  gap: 5px;
+
+  font-size: 14px;
+  color: ${(props) => props.theme.text};
+
+  p {
+    margin-right: 5px;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 28px;
+    font-weight: bolder;
+  }
+
+  form {
+    display: flex;
+  }
+
+  input[type='number'] {
+    width: 25px;
+    text-align: center;
+    border: 1px solid #ccc;
+    outline: none;
+    -webkit-appearance: textfield;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input {
+    background-color: ${(props) => props.theme.button};
+    border: none !important;
+  }
+
+  button {
+    background-color: ${(props) => props.theme.button};
+    border: none;
+
+    width: 36px;
+    height: 38px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: ${(props) => props.theme.pdark};
+
+    svg {
+      color: ${(props) => props.theme.white};
+    }
+  }
+
+  .shoppingButton {
+    margin-left: 10px;
+    background-color: ${(props) => props.theme.pdark};
+    border-radius: 5px;
+    border: none;
   }
 `

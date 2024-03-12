@@ -12,3 +12,10 @@ export const Coffees = styled.div`
     }
   }
 `
+export const GridContainer = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+`

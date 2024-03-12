@@ -1,19 +1,80 @@
 import * as S from './styles'
-import Americano from '../../../../assets/Type=Americano.svg'
+import { ShoppingCart } from 'phosphor-react'
+import { useState } from 'react'
 
-// import { coffeesOptions } from './options'
+interface ICardCoffee {
+  title: string
+  subtitle: string
+  types: string[]
+  logo: string
+}
 
-export const CardCoffee = () => {
+export const CardCoffee = ({ title, subtitle, types, logo }: ICardCoffee) => {
+  const [value, setValue] = useState(1)
+
+  const handlePlus = () => {
+    if (value < 10) {
+      setValue(value + 1)
+    } else {
+      setValue(10)
+    }
+  }
+  const handleMinus = () => {
+    if (value <= 10) {
+      setValue(value - 1)
+    } else {
+      setValue(10)
+    }
+    if (value <= 0) {
+      setValue(0)
+    }
+  }
+
   return (
     <S.Card>
       <div>
-        <img src={Americano} alt="" />
+        <img src={logo} alt="" />
       </div>
-      <S.YellowP>TRADICIONAL</S.YellowP>
+      <div style={{ display: 'flex' }}>
+        {types.map((type) => {
+          return <S.YellowP key={type}>{type}</S.YellowP>
+        })}
+      </div>
       <S.TextDiv>
-        <p>Expresso Tradicional</p>
-        <p>O tradicional café feito com água quente e grãos moídos</p>
+        <p>{title}</p>
+        <p>{subtitle}</p>
       </S.TextDiv>
+      <S.PriceDiv>
+        R$ <p>9,90</p>
+        <form action="">
+          <button type="button" onClick={handleMinus}>
+            -
+          </button>
+          <input
+            type="number"
+            name="qnt"
+            value={value}
+            max={10}
+            min={0}
+            onChange={(e) => {
+              const newValue = Number(e.target.value)
+              if (newValue < 0) {
+                setValue(0)
+              } else if (newValue > 10) {
+                setValue(10)
+              } else {
+                setValue(newValue)
+              }
+            }}
+          />
+          <button type="button" onClick={handlePlus}>
+            +
+          </button>
+          <button type="submit" className="shoppingButton">
+            <ShoppingCart size={20} weight="fill" />
+          </button>
+        </form>
+      </S.PriceDiv>
     </S.Card>
   )
 }
