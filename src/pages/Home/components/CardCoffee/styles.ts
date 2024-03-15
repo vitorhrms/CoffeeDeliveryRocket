@@ -82,7 +82,6 @@ export const PriceDiv = styled.div`
     text-align: center;
     border: 1px solid #ccc;
     outline: none;
-    -webkit-appearance: textfield;
   }
 
   input[type='number']::-webkit-inner-spin-button,
@@ -99,6 +98,7 @@ export const PriceDiv = styled.div`
   button {
     background-color: ${(props) => props.theme.button};
     border: none;
+    cursor: pointer;
 
     width: 36px;
     height: 38px;

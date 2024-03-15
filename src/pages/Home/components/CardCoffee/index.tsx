@@ -25,8 +25,8 @@ export const CardCoffee = ({ title, subtitle, types, logo }: ICardCoffee) => {
     } else {
       setValue(10)
     }
-    if (value <= 0) {
-      setValue(0)
+    if (value <= 1) {
+      setValue(1)
     }
   }
 
@@ -55,11 +55,11 @@ export const CardCoffee = ({ title, subtitle, types, logo }: ICardCoffee) => {
             name="qnt"
             value={value}
             max={10}
-            min={0}
+            min={1}
             onChange={(e) => {
               const newValue = Number(e.target.value)
-              if (newValue < 0) {
-                setValue(0)
+              if (newValue < 1) {
+                setValue(1)
               } else if (newValue > 10) {
                 setValue(10)
               } else {
