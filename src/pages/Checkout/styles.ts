@@ -31,10 +31,24 @@ export const PaymentContainer = styled(DefaultCard)`
 `
 
 export const SelectedCoffee = styled(DefaultCard)`
-  height: 372px;
-  width: 440px !important;
+  width: 500px !important;
 
   border-radius: 6px 40px;
+`
+
+export const ButtonAdd = styled.button `
+  height: 40px;
+
+  color: ${(props) => props.theme.pdark};
+  background-color: ${(props) => props.theme.button};
+  border-radius: 100rem;
+  border: none;
+  
+  margin-left: 10px;
+  padding: 10px;
+  gap: 5px;
+
+  cursor: pointer;
 `
 
 export const ToSandAddress = styled.div`
@@ -111,6 +125,8 @@ export const ButtonsContainer = styled.div`
     font-size: 12px;
     font-family: 'Roboto', sans-serif;
 
+    cursor: pointer;
+
     svg {
       color: ${(props) => props.theme.purple};
     }
@@ -119,5 +135,41 @@ export const ButtonsContainer = styled.div`
       background-color: ${(props) => props.theme.plight};
       border: 2px solid ${(props) => props.theme.purple};
     }
+
+    &.active {
+      background-color: ${(props) => props.theme.plight};
+      border: 2px solid ${(props) => props.theme.purple};
+    }
   }
+`
+
+export const AmountDiv = styled.div `
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+
+  p {
+    color: ${(props) => props.theme.text};
+    font-size: 16px;
+  }
+`
+
+export const ButtonConfirm = styled.div `
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 51px;
+
+  background-color: ${(props) => props.theme.ydark};
+  color: ${(props) => props.theme.white};
+  border: 2px solid transparent;
+  border-radius: 6px;
+
+  font-size: 14px;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
 `

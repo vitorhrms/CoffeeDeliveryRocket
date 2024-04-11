@@ -4,12 +4,21 @@ import {
   CurrencyDollar,
   MapPinLine,
   Money,
+  Plus,
 } from 'phosphor-react'
 import * as S from './styles'
 import { useState } from 'react'
 import { Form } from './components/form'
+import { useCart } from '../../context/CartContext'
+import { coffeesOptions } from '../Home/options'
+import { SelectedCoffees } from './components/CartInfo'
+import { Link } from 'react-router-dom'
+
+type PaymentTypes = 'credit' | 'debit' | 'cash' | 'none'
 
 export const Checkout = () => {
+  const { cartItems } = useCart();
+
   const [cepValue, setCepValue] = useState<string>('')
   const [streetValue, setStreetValue] = useState<string>('')
   const [numberValue, setNumberValue] = useState<string>('')
@@ -17,6 +26,7 @@ export const Checkout = () => {
   const [distinctValue, setDistinctValue] = useState<string>('')
   const [cityValue, setCityValue] = useState<string>('')
   const [stateValue, setStateValue] = useState<string>('')
+  const [selectedPaymentType, setSelectedPaymentType] = useState<PaymentTypes>('none')
 
   console.log(
     'cepValue',
@@ -34,6 +44,28 @@ export const Checkout = () => {
     'stateValue',
     stateValue,
   )
+
+  const togglePaymentType = (type: PaymentTypes) => {
+    setSelectedPaymentType(type)
+  }
+
+  const productQuantities = cartItems.reduce((acc: any, item: any) => {
+    if (acc[item.id]) {
+      acc[item.id] += item.quantity;
+    } else {
+      acc[item.id] = item.quantity;
+    }
+    return acc;
+  }, {});
+
+  const productsCart = Object.keys(productQuantities).map(id => {
+    const coffees = coffeesOptions.find(coffees => coffees.id === parseInt(id));
+    if (coffees) {
+      return { ...coffees, quantity: productQuantities[id] };
+    } else {
+      return null;
+    }
+  }).filter(Boolean);
 
   return (
     <S.Checkout>
@@ -72,15 +104,15 @@ export const Checkout = () => {
               </div>
             </S.Payment>
             <S.ButtonsContainer>
-              <button type="button">
+              <button type="button" className={selectedPaymentType === 'credit' ? 'active' : ''} onClick={() => togglePaymentType('credit')}>
                 <CreditCard size={20} />
                 CARTÃO DE CRÉDITO
               </button>
-              <button type="button">
+              <button type="button" className={selectedPaymentType === 'debit' ? 'active' : ''} onClick={() => togglePaymentType('debit')}>
                 <Bank size={20} />
                 CARTÃO DE DÉBITO
               </button>
-              <button type="button">
+              <button type="button" className={selectedPaymentType === 'cash' ? 'active' : ''} onClick={() => togglePaymentType('cash')}>
                 <Money size={20} />
                 DINHEIRO
               </button>
@@ -90,7 +122,43 @@ export const Checkout = () => {
       </div>
       <div>
         <h1>Cafés selecionados</h1>
-        <S.SelectedCoffee></S.SelectedCoffee>
+        <S.SelectedCoffee>
+          {productsCart && productsCart.map((coffees) => {
+            if (coffees) {
+              return (
+                <SelectedCoffees 
+                  key={coffees.id} 
+                  id={coffees.id} 
+                  title={coffees.title} 
+                  quantity={coffees.quantity} 
+                  logo={coffees.logo} 
+                />
+            )
+            }
+          })}
+          <div style={{display: 'flex', justifyContent:'center'}}>
+            <Link to={'/'}>
+              <S.ButtonAdd type="button">
+                  <Plus size={20} />
+              </S.ButtonAdd>
+            </Link>
+          </div>
+          <S.AmountDiv>
+            <p>Total dos itens</p>
+            <p>R$ {}</p>
+          </S.AmountDiv>
+          <S.AmountDiv>
+            <p>Entrega</p>
+            <p>R$ 3,50</p>
+          </S.AmountDiv>
+          <S.AmountDiv>
+            <p style={{fontWeight:'bold', fontSize:'22px'}}>Total</p>
+            <p style={{fontWeight:'bold', fontSize:'22px'}}>R$ {}</p>
+          </S.AmountDiv>
+          <S.ButtonConfirm>
+            CONFIRMAR PEDIDO
+          </S.ButtonConfirm>
+        </S.SelectedCoffee>
       </div>
     </S.Checkout>
   )

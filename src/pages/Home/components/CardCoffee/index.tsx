@@ -2,14 +2,17 @@ import * as S from './styles'
 import { ShoppingCart } from 'phosphor-react'
 import { useState } from 'react'
 
-interface ICardCoffee {
+export interface ICardCoffee {
+  id: number
   title: string
+  quantity?: number
   subtitle: string
   types: string[]
   logo: string
+  handleAddToCart: (id: number, quantity: number) => void
 }
 
-export const CardCoffee = ({ title, subtitle, types, logo }: ICardCoffee) => {
+export const CardCoffee = ({ id, title, subtitle, types, logo, handleAddToCart }: ICardCoffee) => {
   const [value, setValue] = useState(1)
 
   const handlePlus = () => {
@@ -70,7 +73,7 @@ export const CardCoffee = ({ title, subtitle, types, logo }: ICardCoffee) => {
           <button type="button" onClick={handlePlus}>
             +
           </button>
-          <button type="submit" className="shoppingButton">
+          <button type="button" className="shoppingButton" onClick={() => handleAddToCart(id, value)}>
             <ShoppingCart size={20} weight="fill" />
           </button>
         </form>
